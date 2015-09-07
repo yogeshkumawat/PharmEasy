@@ -40,7 +40,8 @@ public class DataBaseManager extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		Log.v("yogesh", "on create table");
+		
+		//Create tables query
 		String CREATE_TABLE = "CREATE TABLE " + TABLE_MEDICINE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_LABEL + " TEXT,"
                 + KEY_TYPE + " TEXT," + KEY_MANUFACTURER +" TEXT,"
@@ -53,6 +54,7 @@ public class DataBaseManager extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
+		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);        // Create tables again
         onCreate(db);
 		
@@ -71,13 +73,11 @@ public class DataBaseManager extends SQLiteOpenHelper{
 
 			// Inserting Rown
 			long insert = db.insert(TABLE_MEDICINE, null, values);
-			//db.close();
 		}
 	}
 	public void clearAll() {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_MEDICINE, null, null);
-		//db.close();
 	}
 	
 	public ArrayList<Result> getAllResult() {
@@ -110,8 +110,7 @@ public class DataBaseManager extends SQLiteOpenHelper{
 		finally {
 			if(cursor != null)
 				cursor.close();
-			//if(db != null)
-				//db.close();
+			
 		}
 	 
 	    return mResultList;

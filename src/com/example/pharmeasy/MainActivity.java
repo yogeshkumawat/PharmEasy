@@ -28,23 +28,41 @@ public class MainActivity extends Activity {
 	private ArrayList<Result> mResultList = new ArrayList<Result>();
 	private int PageCount = 0;
 	ArrayList<Drawable> mDummyImageList = new ArrayList<Drawable>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		mContext = this;
+		init();
+		
+	}
+	
+	public void init() {
+		
 		mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		//Initiate DataBaseManager Instance
 		mDbManager = new DataBaseManager(mContext);
+		
+		//Fetch all the medicines from DB
 		mResultList = mDbManager.getAllResult();
+		
+		//Number of medicines
 		PageCount = mResultList.size();
+		
+		//Dummy Images
 		collectImage();
+		
+		//View Pager
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
 		viewPager.setAdapter(new MyPageAdapter());
-		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
@@ -64,14 +82,19 @@ public class MainActivity extends Activity {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
+			
+			//Number of medicines
 			return PageCount;
 		}
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			// TODO Auto-generated method stub
+			
+			//Inflate the Slide show view
 			View page = mInflater.inflate(R.layout.page, null);
 			
+			//Medicnies details views
 			TextView tv_label = (TextView) page.findViewById(R.id.label);
 			tv_label.setText("Label : "+mResultList.get(position).getLabel());
 			
@@ -89,8 +112,7 @@ public class MainActivity extends Activity {
 			
 			ImageView img = (ImageView) page.findViewById(R.id.imageView1);
 			
-			//if(position <= 3)
-				img.setImageDrawable(mDummyImageList.get(position%4));
+			img.setImageDrawable(mDummyImageList.get(position%4));
 			
 			((ViewPager) container).addView(page, 0);
 			return page;
@@ -105,6 +127,7 @@ public class MainActivity extends Activity {
 		@Override
 		public boolean isViewFromObject(View arg0, Object arg1) {
 			// TODO Auto-generated method stub
+			
 			//See if object from instantiateItem is related to the given view
 			//required by API
 			return arg0==(View)arg1;
@@ -118,13 +141,5 @@ public class MainActivity extends Activity {
 		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy2));
 		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy3));
 		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy4));
-		/*mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy5));
-		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy6));
-		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy7));
-		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy8));
-		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy9));
-		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy10));
-		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy11));
-		mDummyImageList.add(mContext.getResources().getDrawable(R.drawable.dummy12));*/
 	}
 }

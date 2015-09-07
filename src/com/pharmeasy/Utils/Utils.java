@@ -33,10 +33,8 @@ public class Utils {
 		try {
 			
 			URL url = new URL(urlS);
-			Log.i("yogesh", url.toString());
 			httpURLConnection = (HttpURLConnection) url.openConnection();
 			int response = httpURLConnection.getResponseCode();
-			Log.i("yogesh", "responce: "+response);
 			if (response == HttpURLConnection.HTTP_OK) {
 				httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT_MS);
 				httpURLConnection.setReadTimeout(READ_TIMEOUT_MS);
